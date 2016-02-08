@@ -1,0 +1,24 @@
+GIT_URI="https://github.com/publicsuffix/list.git"
+inherit git
+
+NAME="publicsuffix-list"
+VERSION=20160205
+RELEASE=1
+CATEGORY="Net"
+SUMMARY="Public Suffix List"
+DESCRIPTION="A public suffix is one under which Internet users can (or
+historically could) directly register names. Some examples of public
+suffixes are .com, .co.uk and pvt.k12.ma.us. The Public Suffix List is a
+list of all known public suffixes."
+HOMEPAGE="https://publicsuffix.org/"
+
+ARCH=noarch
+
+src_compile() { :; }
+
+src_install() {
+	cd ${S}
+	insinto /usr/share/publicsuffix
+	doins public_suffix_list.dat tests/test_psl.txt
+	dosym public_suffix_list.dat /usr/share/publicsuffix/effective_tld_names.dat
+}
