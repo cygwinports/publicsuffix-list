@@ -2,7 +2,7 @@ GIT_URI="https://github.com/publicsuffix/list.git"
 inherit git
 
 NAME="publicsuffix-list"
-VERSION=20161028
+VERSION=20170116
 RELEASE=1
 CATEGORY="Net"
 SUMMARY="Public Suffix List"
@@ -14,11 +14,25 @@ HOMEPAGE="https://publicsuffix.org/"
 
 ARCH=noarch
 
+PKG_NAMES="${NAME} ${NAME}-dafsa"
+publicsuffix_list_DOCS="LICENSE README.md"
+publicsuffix_list_CONTENTS="
+	usr/share/publicsuffix/effective_tld_names.dat
+	usr/share/publicsuffix/public_suffix_list.dat
+	usr/share/publicsuffix/test_psl.txt
+"
+publicsuffix_list_dafsa_DOCS="LICENSE README.md"
+publicsuffix_list_dafsa_CONTENTS="usr/share/publicsuffix/public_suffix_list.dafsa"
+
 src_compile() { :; }
 
 src_install() {
+	check_prog_req psl-make-dafsa
+
 	cd ${S}
 	insinto /usr/share/publicsuffix
 	doins public_suffix_list.dat tests/test_psl.txt
 	dosym public_suffix_list.dat /usr/share/publicsuffix/effective_tld_names.dat
+	psl-make-dafsa --output-format=binary \
+		${D}/usr/share/publicsuffix/public_suffix_list.{dat,dafsa}
 }
