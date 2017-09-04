@@ -2,7 +2,7 @@ GIT_URI="https://github.com/publicsuffix/list.git"
 inherit git
 
 NAME="publicsuffix-list"
-VERSION=20170809
+VERSION=20170828
 RELEASE=1
 CATEGORY="Net"
 SUMMARY="Public Suffix List"
